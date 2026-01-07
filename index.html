@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Angga Adhi Prayoga</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS (Animate On Scroll) Library CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Konfigurasi Tailwind & Custom Styles -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'poppins': ['Poppins', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Transisi halus untuk dark mode */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        /* Animasi mengambang untuk foto */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+
+    <!-- ========== HEADER & HERO SECTION ========== -->
+    <header class="relative">
+        <!-- Navbar dengan Dark Mode Toggle -->
+        <nav class="container mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Angga.dev</a>
+            
+            <!-- Dark Mode Toggle Button -->
+            <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <!-- Sun Icon (untuk mode gelap) -->
+                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                </svg>
+                <!-- Moon Icon (untuk mode terang) -->
+                <svg id="moon-icon" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Hero Content dengan Foto -->
+        <div class="container mx-auto px-6 py-16">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                
+                <!-- Foto Profil -->
+                <div class="md:w-1/3 flex justify-center" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="relative floating">
+                        <img 
+                            src="https://scontent.fsub8-2.fna.fbcdn.net/v/t39.30808-6/465183087_8869145619782666_7478268597695643797_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG-NdAnJZqXQBNcnI9SUAnRgu9Q0CV0RH2C71DQJXREfb8m7bugYL4AtMBhY_KypCY9Whnm7USxc-CQ9xPdEwVX&_nc_ohc=jAcIZRAtSisQ7kNvwEWP95U&_nc_oc=AdnLjv3szSTuZjHDFSASqSmL8jQxE34k7VDOLxlD1XadNmeMeMyuATEtEs6KNhjKArM&_nc_zt=23&_nc_ht=scontent.fsub8-2.fna&_nc_gid=BpDPm6PxFeCDpWNmiFewWQ&oh=00_Afqaobevek3D1-UCD1CL7Z2_c-FO-omdjCud2Fp0GATmJQ&oe=6963A3B0" 
+                            alt="Foto Profil Angga Adhi Prayoga" 
+                            class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-800"
+                        >
+                        <!-- GANTI DENGAN FOTO ANDA -->
+                        <!-- Anda bisa upload foto ke Imgur.com lalu ganti URL di atas -->
+                    </div>
+                </div>
+
+                <!-- Teks Hero -->
+                <div class="md:w-2/3 text-center md:text-left" data-aos="fade-left" data-aos-duration="1000">
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                        Menciptakan Solusi <span class="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Digital</span> yang Berarti.
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl">
+                        Saya adalah seorang Full-Stack Developer yang berfokus pada pembangunan aplikasi web yang intuitif, efisien, dan memberikan pengalaman terbaik bagi pengguna.
+                    </p>
+                    <a href="#projects" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-8 rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                        Lihat Karya Saya
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ========== PROJECTS SECTION ========== -->
+        <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Proyek Unggulan</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Eksplorasi beberapa proyek terbaru yang telah saya kerjakan.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    
+                    <!-- Project 1: Website Puskesmas -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Website+Puskesmas" alt="Mockup Website Puskesmas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Website Puskesmas</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                Website profil dan layanan untuk puskesmas dengan dashboard admin yang komprehensif.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">Laravel</span>
+                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">MySQL</span>
+                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">Tailwind</span>
+                            </div>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Aplikasi Cuti -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/DCFCE7/166534?text=Aplikasi+Cuti" alt="Mockup Aplikasi Cuti" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Aplikasi Pengajuan Cuti</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                Sistem digitalisasi pengajuan cuti karyawan dengan alur approval yang efisien.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">React.js</span>
+                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">Node.js</span>
+                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">Tailwind</span>
+                            </div>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Anjungan Cerdas Puskesmas -->
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="400">
+                        <div class="overflow-hidden h-48">
+                            <img src="https://placehold.co/600x400/FEF3C7/F59E0B?text=Anjungan+Cerdas" alt="Mockup Anjungan Cerdas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Anjungan Cerdas</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                Sistem self-service berbasis touch screen untuk antrian dan informasi pasien.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">Vue.js</span>
+                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">Laravel API</span>
+                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">WebSocket</span>
+                            </div>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SKILLS SECTION ========== -->
+        <section class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="zoom-in">Teknologi & Keahlian</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto" data-aos="zoom-in" data-aos-delay="100">
+                    Stack teknologi yang saya gunakan untuk membangun solusi yang andal dan modern.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Laravel</div>
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">React.js</div>
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Vue.js</div>
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Node.js</div>
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Tailwind CSS</div>
+                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">MySQL</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER & CONTACT ========== -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold mb-4" data-aos="fade-up">Mari Berkolaborasi</h2>
+            <p class="text-gray-400 mb-6" data-aos="fade-up" data-aos-delay="100">Saya siap untuk membantu mewujudkan ide Anda.</p>
+            <a href="mailto:angga.adhi@email.com" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-8 rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                Hubungi Saya
+            </a>
+            <div class="mt-8 text-gray-500 text-sm">
+                <p>&copy; 2024 Angga Adhi Prayoga. Dibuat dengan <span class="text-red-500">♥</span> dan banyak kopi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS (Animate On Scroll) Library JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JavaScript untuk Dark Mode -->
+    <script>
+        // Inisialisasi AOS
+        AOS.init({
+            once: true // Animasi hanya terjadi sekali
+        });
+
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const htmlElement = document.documentElement;
+
+        // Cek tema yang tersimpan di localStorage saat halaman dimuat
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            htmlElement.classList.add(currentTheme);
+            updateIcon(currentTheme);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            // Toggle class 'dark' pada elemen <html>
+            htmlElement.classList.toggle('dark');
+
+            // Simpan tema yang dipilih ke localStorage
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+            
+            // Update icon
+            updateIcon(localStorage.getItem('theme'));
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
