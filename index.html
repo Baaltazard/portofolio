@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio - Angga Adhi Prayoga</title>
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- AOS (Animate On Scroll) Library CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Google Fonts - Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Konfigurasi Tailwind & Custom Styles -->
+    <!-- Iconify untuk ikon teknologi -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    
     <script>
       tailwind.config = {
-        darkMode: 'class', // Konfigurasi penting agar 'dark:' class bekerja
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -32,139 +30,448 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-        /* Transisi halus untuk dark mode */
         * {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
-        /* Animasi mengambang untuk foto */
+
+        /* --- Animasi Floating --- */
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-12px) rotate(1deg); }
+            66% { transform: translateY(-6px) rotate(-1deg); }
         }
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        /* --- Geometric Shapes di Hero --- */
+        @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+        .spin-slow { animation: spin-slow 25s linear infinite; }
+        .spin-reverse { animation: spin-reverse 20s linear infinite; }
+        .morph { animation: morph 8s ease-in-out infinite; }
+
+        /* --- Typing cursor --- */
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .typing-cursor { animation: blink 0.8s step-end infinite; }
+
+        /* --- Glow effect pada gradient text --- */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(99, 102, 241, 0.3), 0 0 80px rgba(168, 85, 247, 0.15);
+        }
+        .dark .glow-text {
+            text-shadow: 0 0 40px rgba(99, 102, 241, 0.4), 0 0 80px rgba(168, 85, 247, 0.25);
+        }
+
+        /* --- Glassmorphism Card --- */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* --- Skill bar fill animation --- */
+        .skill-fill {
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .skill-fill.animate { width: var(--fill); }
+
+        /* --- Project card shimmer --- */
+        .card-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .card-shimmer:hover::before { left: 100%; }
+
+        /* --- Navbar blur --- */
+        .nav-blur {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .dark .nav-blur {
+            background: rgba(17, 24, 39, 0.85);
+        }
+        .nav-scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+        }
+        .dark .nav-scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- Scroll-to-top --- */
+        .scroll-top {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        /* --- Pulse ring pada foto --- */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0; }
+            100% { transform: scale(0.95); opacity: 0; }
+        }
+        .pulse-ring {
+            animation: pulse-ring 3s ease-out infinite;
+        }
+
+        /* --- Mobile menu --- */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .mobile-menu.open {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        /* --- Dot pattern --- */
+        .dot-pattern {
+            background-image: radial-gradient(circle, rgba(99,102,241,0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark .dot-pattern {
+            background-image: radial-gradient(circle, rgba(99,102,241,0.12) 1px, transparent 1px);
         }
     </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
+<body class="bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100">
 
-    <!-- ========== HEADER & HERO SECTION ========== -->
-    <header class="relative">
-        <!-- Navbar dengan Dark Mode Toggle -->
-        <nav class="container mx-auto px-6 py-6 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Yoga.dev</a>
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent tracking-tight">Yoga.dev</a>
             
-            <!-- Dark Mode Toggle Button -->
-            <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none">
-                <!-- Sun Icon (untuk mode gelap) -->
-                <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <!-- Moon Icon (untuk mode terang) -->
-                <svg id="moon-icon" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-        </nav>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#hero" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Beranda</a>
+                <a href="#about" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tentang</a>
+                <a href="#projects" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Proyek</a>
+                <a href="#skills" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Keahlian</a>
+                <a href="#contact" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Kontak</a>
+            </div>
 
-        <!-- Hero Content dengan Foto -->
-        <div class="container mx-auto px-6 py-16">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+            <div class="flex items-center gap-3">
+                <!-- Dark Mode Toggle -->
+                <button id="theme-toggle" class="relative p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all focus:outline-none group" aria-label="Toggle dark mode">
+                    <svg id="sun-icon" class="w-5 h-5 text-amber-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moon-icon" class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-toggle" class="md:hidden p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all focus:outline-none" aria-label="Menu">
+                    <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden px-6 pb-4">
+            <div class="flex flex-col gap-3 bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-lg border border-gray-100 dark:border-gray-800">
+                <a href="#hero" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">Beranda</a>
+                <a href="#about" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">Tentang</a>
+                <a href="#projects" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">Proyek</a>
+                <a href="#skills" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">Keahlian</a>
+                <a href="#contact" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden dot-pattern">
+        
+        <!-- Geometric Background Shapes -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 dark:from-indigo-500/10 dark:to-purple-500/10 morph"></div>
+            <div class="absolute top-1/3 -left-48 w-80 h-80 bg-gradient-to-tr from-pink-400/15 to-orange-400/15 dark:from-pink-500/8 dark:to-orange-500/8 morph" style="animation-delay: -4s;"></div>
+            <div class="absolute bottom-20 right-1/4 w-64 h-64 bg-gradient-to-bl from-cyan-400/10 to-blue-400/10 dark:from-cyan-500/5 dark:to-blue-500/5 morph" style="animation-delay: -2s;"></div>
+            
+            <!-- Spinning outlines -->
+            <div class="absolute top-20 right-1/3 w-32 h-32 border border-indigo-300/20 dark:border-indigo-500/10 rounded-2xl spin-slow"></div>
+            <div class="absolute bottom-40 left-20 w-24 h-24 border border-purple-300/20 dark:border-purple-500/10 rounded-full spin-reverse"></div>
+            <div class="absolute top-1/2 right-16 w-16 h-16 border border-pink-300/20 dark:border-pink-500/10 rounded-lg spin-slow" style="animation-duration: 15s;"></div>
+
+            <!-- Dots -->
+            <div class="absolute top-32 left-1/4 w-2 h-2 bg-indigo-400/30 rounded-full"></div>
+            <div class="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-400/30 rounded-full"></div>
+            <div class="absolute bottom-32 left-1/3 w-2.5 h-2.5 bg-pink-400/20 rounded-full"></div>
+        </div>
+
+        <div class="container mx-auto px-6 pt-28 pb-16 relative z-10">
+            <div class="flex flex-col-reverse lg:flex-row items-center justify-center gap-12 lg:gap-20">
                 
-                <!-- Foto Profil -->
-                <div class="md:w-1/3 flex justify-center" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="relative floating">
-                        <img 
-                            src="me.png" 
-                            alt="Foto Profil Angga Adhi Prayoga" 
-                            class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-800"
-                        >
+                <!-- Teks Hero -->
+                <div class="lg:w-3/5 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-800/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        Tersedia untuk proyek baru
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
+                        Menciptakan Solusi 
+                        <span class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent glow-text">Digital</span> 
+                        yang Berarti.
+                    </h1>
+
+                    <div class="flex items-center justify-center lg:justify-start gap-2 text-lg text-gray-500 dark:text-gray-400 mb-4 h-8">
+                        <span>Saya adalah</span>
+                        <span id="typed-text" class="font-semibold text-indigo-600 dark:text-indigo-400"></span>
+                        <span class="typing-cursor text-indigo-600 dark:text-indigo-400 font-bold">|</span>
+                    </div>
+
+                    <p class="text-base lg:text-lg text-gray-500 dark:text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Berfokus pada pembangunan aplikasi web yang intuitif, efisien, dan memberikan pengalaman terbaik bagi pengguna dengan kode yang bersih dan terstruktur.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#projects" class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold py-3.5 px-8 rounded-2xl hover:shadow-2xl hover:shadow-indigo-500/25 transform hover:scale-[1.03] transition-all duration-300 overflow-hidden">
+                            <span class="relative z-10">Lihat Karya Saya</span>
+                            <svg class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                        <a href="#contact" class="inline-flex items-center gap-2 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold py-3.5 px-8 rounded-2xl hover:border-indigo-300 dark:hover:border-indigo-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            Hubungi Saya
+                        </a>
+                    </div>
+
+                    <!-- Stats kecil -->
+                    <div class="flex items-center justify-center lg:justify-start gap-8 mt-10 pt-8 border-t border-gray-100 dark:border-gray-800">
+                        <div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white">3+</div>
+                            <div class="text-xs text-gray-400 font-medium">Tahun Pengalaman</div>
+                        </div>
+                        <div class="w-px h-10 bg-gray-200 dark:bg-gray-800"></div>
+                        <div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white">10+</div>
+                            <div class="text-xs text-gray-400 font-medium">Proyek Selesai</div>
+                        </div>
+                        <div class="w-px h-10 bg-gray-200 dark:bg-gray-800"></div>
+                        <div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white">5+</div>
+                            <div class="text-xs text-gray-400 font-medium">Klien Puas</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Teks Hero -->
-                <div class="md:w-2/3 text-center md:text-left" data-aos="fade-left" data-aos-duration="1000">
-                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                        Menciptakan Solusi <span class="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Digital</span> yang Berarti.
-                    </h1>
-                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl">
-                        Saya adalah seorang Full-Stack Developer yang berfokus pada pembangunan aplikasi web yang intuitif, efisien, dan memberikan pengalaman terbaik bagi pengguna.
-                    </p>
-                    <a href="#projects" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-8 rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                        Lihat Karya Saya
-                    </a>
+                <!-- Foto Profil -->
+                <div class="lg:w-2/5 flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="relative floating">
+                        <!-- Pulse ring background -->
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 blur-2xl scale-110 pulse-ring"></div>
+                        
+                        <!-- Decorative ring -->
+                        <div class="absolute -inset-4 rounded-full border-2 border-dashed border-indigo-200/50 dark:border-indigo-700/30 spin-slow"></div>
+                        
+                        <img 
+                            src="me.png" 
+                            alt="Foto Profil Angga Adhi Prayoga" 
+                            class="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full object-cover shadow-2xl shadow-indigo-500/10 ring-4 ring-white dark:ring-gray-900"
+                        >
+                        
+                        <!-- Floating badge -->
+                        <div class="absolute -bottom-2 -right-2 bg-white dark:bg-gray-800 shadow-xl rounded-2xl px-4 py-2 flex items-center gap-2 border border-gray-100 dark:border-gray-700">
+                            <span class="iconify w-6 h-6 text-indigo-500" data-icon="logos:laravel"></span>
+                            <span class="text-xs font-bold text-gray-700 dark:text-gray-300">Laravel</span>
+                        </div>
+                        <div class="absolute -top-2 -left-2 bg-white dark:bg-gray-800 shadow-xl rounded-2xl px-4 py-2 flex items-center gap-2 border border-gray-100 dark:border-gray-700">
+                            <span class="iconify w-6 h-6" data-icon="logos:react"></span>
+                            <span class="text-xs font-bold text-gray-700 dark:text-gray-300">React</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
-    </header>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Scroll</span>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
 
     <main>
-        <!-- ========== PROJECTS SECTION ========== -->
-        <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <!-- ========== ABOUT SECTION ========== -->
+        <section id="about" class="py-24 relative">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Proyek Unggulan</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Eksplorasi beberapa proyek terbaru yang telah saya kerjakan.
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16" data-aos="fade-up">
+                        <span class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-3 block">Tentang Saya</span>
+                        <h2 class="text-3xl md:text-5xl font-black tracking-tight">Mengenal Lebih Dekat</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div data-aos="fade-right" data-aos-duration="800">
+                            <div class="relative">
+                                <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/5 dark:to-purple-500/5 rounded-3xl morph"></div>
+                                <div class="relative bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl p-8 border border-indigo-100/50 dark:border-gray-800">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-50 dark:border-gray-700 text-center">
+                                            <span class="iconify w-8 h-8 mx-auto mb-2 text-indigo-500" data-icon="solar:code-bold-duotone"></span>
+                                            <div class="text-xs font-bold text-gray-700 dark:text-gray-300">Frontend</div>
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-50 dark:border-gray-700 text-center">
+                                            <span class="iconify w-8 h-8 mx-auto mb-2 text-purple-500" data-icon="solar:server-bold-duotone"></span>
+                                            <div class="text-xs font-bold text-gray-700 dark:text-gray-300">Backend</div>
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-50 dark:border-gray-700 text-center">
+                                            <span class="iconify w-8 h-8 mx-auto mb-2 text-pink-500" data-icon="solar:database-bold-duotone"></span>
+                                            <div class="text-xs font-bold text-gray-700 dark:text-gray-300">Database</div>
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-50 dark:border-gray-700 text-center">
+                                            <span class="iconify w-8 h-8 mx-auto mb-2 text-cyan-500" data-icon="solar:palette-bold-duotone"></span>
+                                            <div class="text-xs font-bold text-gray-700 dark:text-gray-300">UI/UX</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-aos="fade-left" data-aos-duration="800">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Angga Adhi Prayoga</h3>
+                            <p class="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
+                                Seorang Full-Stack Developer yang passionate dalam membangun aplikasi web modern. Saya percaya bahwa teknologi yang baik adalah yang tidak terasa — ia harus bekerja dengan mulus dan memberikan dampak nyata.
+                            </p>
+                            <p class="text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                                Dengan pengalaman di berbagai stack teknologi mulai dari Laravel, React, hingga Vue.js, saya selalu berusaha menulis kode yang bersih, scalable, dan maintainable.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-green-50 dark:bg-green-950/50 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg border border-green-100 dark:border-green-800/50">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Problem Solver
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-blue-800/50">
+                                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>Team Player
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-400 px-3 py-1.5 rounded-lg border border-purple-100 dark:border-purple-800/50">
+                                    <span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>Fast Learner
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PROJECTS SECTION ========== -->
+        <section id="projects" class="py-24 bg-gray-50/80 dark:bg-gray-900/50 relative overflow-hidden">
+            <!-- Subtle bg decoration -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-indigo-200/30 dark:from-indigo-900/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-3 block">Portofolio</span>
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4">Proyek Unggulan</h2>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                        Beberapa proyek terbaik yang menunjukkan kemampuan dan dedikasi saya dalam development.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <!-- Project 1: Website Puskesmas -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
-                        <div class="overflow-hidden h-48">
-                            <!-- Catatan: Gambar lokal tidak akan muncul jika folder salah, pastikan file gambar ada di folder yang sama -->
-                            <img src="Screenshot 2026-01-07 101836.png" alt="Mockup Website Puskesmas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <!-- Project 1 -->
+                    <div class="glass card-shimmer rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-500 group overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative overflow-hidden h-52">
+                            <img src="Screenshot 2026-01-07 101836.png" alt="Website Puskesmas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">Laravel</span>
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">MySQL</span>
+                            </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Website Puskesmas</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Web Application</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Website Puskesmas</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-5 leading-relaxed">
                                 Website profil dan layanan untuk puskesmas dengan dashboard admin yang komprehensif.
                             </p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">Laravel</span>
-                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">MySQL</span>
-                                <span class="text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded">Tailwind</span>
-                            </div>
-                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                            <a href="#" class="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all">
+                                Lihat Detail 
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Project 2: Aplikasi Cuti -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
-                        <div class="overflow-hidden h-48">
-                            <img src="Screenshot 2026-01-07 101921.png" alt="Mockup Aplikasi Cuti" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <!-- Project 2 -->
+                    <div class="glass card-shimmer rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-500 group overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative overflow-hidden h-52">
+                            <img src="Screenshot 2026-01-07 101921.png" alt="Aplikasi Cuti" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">React.js</span>
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">Node.js</span>
+                            </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Aplikasi Pengajuan Cuti</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Sistem Informasi</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Aplikasi Pengajuan Cuti</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-5 leading-relaxed">
                                 Sistem digitalisasi pengajuan cuti karyawan dengan alur approval yang efisien.
                             </p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">React.js</span>
-                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">Node.js</span>
-                                <span class="text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2.5 py-0.5 rounded">Tailwind</span>
-                            </div>
-                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                            <a href="#" class="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all">
+                                Lihat Detail 
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Project 3: Anjungan Cerdas Puskesmas -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden group" data-aos="fade-up" data-aos-delay="400">
-                        <div class="overflow-hidden h-48">
-                            <img src="Screenshot 2026-01-07 102013.png" alt="Mockup Anjungan Cerdas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <!-- Project 3 -->
+                    <div class="glass card-shimmer rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-500 group overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative overflow-hidden h-52">
+                            <img src="Screenshot 2026-01-07 102013.png" alt="Anjungan Cerdas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">Vue.js</span>
+                                <span class="text-xs font-bold bg-white/90 text-gray-800 px-3 py-1 rounded-lg backdrop-blur-sm">WebSocket</span>
+                            </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Anjungan Cerdas</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">IoT & Interactive</span>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Anjungan Cerdas</h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-5 leading-relaxed">
                                 Sistem self-service berbasis touch screen untuk antrian dan informasi pasien.
                             </p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">Vue.js</span>
-                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">Laravel API</span>
-                                <span class="text-xs font-semibold bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2.5 py-0.5 rounded">WebSocket</span>
-                            </div>
-                            <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Lihat Detail →</a>
+                            <a href="#" class="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all">
+                                Lihat Detail 
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
                         </div>
                     </div>
 
@@ -173,97 +480,315 @@
         </section>
 
         <!-- ========== SKILLS SECTION ========== -->
-        <section class="py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="zoom-in">Teknologi & Keahlian</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto" data-aos="zoom-in" data-aos-delay="100">
-                    Stack teknologi yang saya gunakan untuk membangun solusi yang andal dan modern.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Laravel</div>
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">React.js</div>
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Vue.js</div>
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Node.js</div>
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">Tailwind CSS</div>
-                    <div class="bg-gray-100 dark:bg-gray-800 px-6 py-3 rounded-full font-semibold text-gray-700 dark:text-gray-300 hover:shadow-lg transition-shadow">MySQL</div>
+        <section id="skills" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-3 block">Keahlian</span>
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4">Teknologi & Tools</h2>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                        Stack teknologi yang saya kuasai untuk membangun solusi yang andal dan modern.
+                    </p>
+                </div>
+
+                <div class="max-w-3xl mx-auto space-y-6" data-aos="fade-up" data-aos-delay="100">
+                    
+                    <!-- Skill Bar: Laravel -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6 text-red-500" data-icon="logos:laravel"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">Laravel</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">90%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-red-400 to-red-600 rounded-full" style="--fill: 90%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar: React -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6" data-icon="logos:react"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">React.js</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">85%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" style="--fill: 85%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar: Vue -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6" data-icon="logos:vue"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">Vue.js</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">80%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full" style="--fill: 80%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar: Node.js -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6" data-icon="logos:nodejs-icon"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">Node.js</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">75%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="--fill: 75%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar: Tailwind -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6" data-icon="logos:tailwindcss-icon"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">Tailwind CSS</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">92%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-sky-400 to-sky-600 rounded-full" style="--fill: 92%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Bar: MySQL -->
+                    <div class="skill-item">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-3">
+                                <span class="iconify w-6 h-6" data-icon="logos:mysql-icon"></span>
+                                <span class="font-bold text-sm text-gray-800 dark:text-gray-200">MySQL</span>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400">85%</span>
+                        </div>
+                        <div class="h-2.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                            <div class="skill-fill h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" style="--fill: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional tools pills -->
+                <div class="max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
+                    <p class="text-xs font-bold uppercase tracking-widest text-gray-400 text-center mb-4">Tools & Lainnya</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:git-icon"></span>Git
+                        </div>
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:github-icon"></span>GitHub
+                        </div>
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:visual-studio-code"></span>VS Code
+                        </div>
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:figma"></span>Figma
+                        </div>
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:docker-icon"></span>Docker
+                        </div>
+                        <div class="glass flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:shadow-md transition-shadow cursor-default">
+                            <span class="iconify w-4 h-4" data-icon="logos:postman-icon"></span>Postman
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-     <!-- ========== FOOTER & CONTACT ========== -->
-    <footer class="bg-gray-900 dark:bg-black text-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold mb-4" data-aos="fade-up">Mari Berkolaborasi</h2>
-            <p class="text-gray-400 mb-6" data-aos="fade-up" data-aos-delay="100">Saya siap untuk membantu mewujudkan ide Anda.</p>
-            
-            <!-- Tombol Kontak -->
-            <div class="flex justify-center items-center gap-4" data-aos="fade-up" data-aos-delay="200">
-                <a href="mailto:baaltazard89@gmail.com" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-8 rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                    Hubungi Saya
-                </a>
-                <a href="https://wa.me/6287745495176" target="_blank" rel="noopener noreferrer" class="bg-green-500 text-white p-3 rounded-full hover:shadow-2xl transform hover:scale-110 transition-all duration-300" title="Hubungi via WhatsApp">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                    </svg>
-                </a>
-            </div>
+    <!-- ========== FOOTER & CONTACT ========== -->
+    <footer id="contact" class="relative bg-gray-950 dark:bg-black text-white py-24 overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-2xl mx-auto text-center">
+                <div data-aos="fade-up">
+                    <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-3 block">Kontak</span>
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4">Mari Berkolaborasi</h2>
+                    <p class="text-gray-400 mb-10 leading-relaxed">
+                        Punya ide proyek yang menarik? Saya siap untuk membantu mewujudkan visi digital Anda menjadi kenyataan.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
+                    <a href="mailto:baaltazard89@gmail.com" class="group relative inline-flex items-center gap-2.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold py-4 px-10 rounded-2xl hover:shadow-2xl hover:shadow-indigo-500/25 transform hover:scale-[1.03] transition-all duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        Kirim Email
+                    </a>
+                    <a href="https://wa.me/6287745495176" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-green-600 text-white font-bold py-4 px-10 rounded-2xl hover:shadow-2xl hover:shadow-green-500/25 transform hover:scale-[1.03] transition-all duration-300" title="Hubungi via WhatsApp">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
 
-            <div class="mt-8 text-gray-500 text-sm">
-                <p>&copy; 2024 Angga Adhi Prayoga. Dibuat dengan <span class="text-red-500">♥</span> dan banyak kopi.</p>
+                <!-- Social links -->
+                <div class="flex items-center justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="150">
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                        <span class="iconify w-5 h-5" data-icon="mdi:github"></span>
+                    </a>
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                        <span class="iconify w-5 h-5" data-icon="mdi:linkedin"></span>
+                    </a>
+                    <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                        <span class="iconify w-5 h-5" data-icon="mdi:instagram"></span>
+                    </a>
+                </div>
+
+                <div class="border-t border-white/5 pt-8">
+                    <p class="text-gray-500 text-sm">
+                        &copy; 2024 Angga Adhi Prayoga. Dibuat dengan <span class="text-red-500">♥</span> dan banyak kopi.
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- AOS (Animate On Scroll) Library JS -->
+    <!-- ========== SCROLL TO TOP ========== -->
+    <button id="scroll-top" class="scroll-top fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl shadow-lg shadow-indigo-500/25 flex items-center justify-center hover:scale-110 transition-transform" aria-label="Scroll to top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
-    <!-- Custom JavaScript untuk Dark Mode (PERBAIKAN DI SINI) -->
     <script>
+        // ============================
         // Inisialisasi AOS
-        AOS.init({
-            once: true 
-        });
+        // ============================
+        AOS.init({ once: true });
 
-        // --- LOGIKA DARK MODE YANG DIPERBAIKI ---
-        
-        // Ambil elemen DOM
+        // ============================
+        // Dark Mode
+        // ============================
         const themeToggleBtn = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
         const htmlElement = document.documentElement;
 
-        // Fungsi untuk mengatur tema (UI, DOM class, dan LocalStorage)
         function setTheme(isDark) {
             if (isDark) {
                 htmlElement.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
-                
-                // Tampilkan Sun, Sembunyikan Moon
                 sunIcon.classList.remove('hidden');
                 moonIcon.classList.add('hidden');
             } else {
                 htmlElement.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
-                
-                // Tampilkan Moon, Sembunyikan Sun
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
             }
         }
 
-        // Cek preferensi saat halaman dimuat
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            setTheme(true); // Aktifkan dark mode
+            setTheme(true);
         } else {
-            setTheme(false); // Aktifkan light mode
+            setTheme(false);
         }
 
-        // Event Listener saat tombol diklik
         themeToggleBtn.addEventListener('click', () => {
-            // Cek apakah saat ini punya class 'dark', lalu balik (toggle)
             setTheme(!htmlElement.classList.contains('dark'));
         });
+
+        // ============================
+        // Navbar scroll effect
+        // ============================
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // ============================
+        // Mobile menu toggle
+        // ============================
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        // Tutup menu saat klik link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // ============================
+        // Scroll to top button
+        // ============================
+        const scrollTopBtn = document.getElementById('scroll-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ============================
+        // Typing effect
+        // ============================
+        const typedEl = document.getElementById('typed-text');
+        const words = ['Full-Stack Developer', 'React Enthusiast', 'Laravel Specialist', 'UI/UX Explorer', 'Problem Solver'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 80;
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typedEl.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 40;
+            } else {
+                typedEl.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 80;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Jeda di akhir kata
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 400; // Jeda sebelum kata baru
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        typeEffect();
+
+        // ============================
+        // Skill bar animation on scroll
+        // ============================
+        const skillFills = document.querySelectorAll('.skill-fill');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillFills.forEach(fill => skillObserver.observe(fill));
     </script>
 </body>
 </html>
